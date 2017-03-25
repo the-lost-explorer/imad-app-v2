@@ -30,7 +30,7 @@ app.get('/ui/madi.png', function (req, res) {
 });
 
 //sql stuff
-var pool = new pg.Pool(config);
+var pool = new Pool(config);
 app.get('/test-db',function(req,res){
    pool.query('SELECT*FROM test',function(req,res){
        if(err){
