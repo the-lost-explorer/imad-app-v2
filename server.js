@@ -3,7 +3,8 @@ var morgan = require('morgan');
 var path = require('path');
 var Pool = require('pg').Pool;
 const crypto = require('crypto');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+var session = require('express-session');
 var config = {
     user:'the-lost-explorer' ,  
     database:'the-lost-explorer',
@@ -15,7 +16,10 @@ var config = {
 var app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
-
+app.ues(session({
+    secret: 'thisismysecret',
+    cookie:{ maxAge : 1000*60*60*24*30}
+}))
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
@@ -84,8 +88,29 @@ app.post('/create-user',function(req,res){
 
 
 
+//Login user
 
-
+app.post('/login',function(req,res){
+     pool.query('SELECT * FROM "user" username = $1',[username],function(err,result){
+       if(err){
+           res.status(500).send(err.toString());
+       }else{
+           if(result.rows.length === 0 ){
+               res.status(403).send('username/password invalid');
+           }else{
+               var dbString = result.rows[0].password;
+               var salt = dbString.split('$')[2];
+               var hashedPassword = hash(password,salt);
+               if(hashedPassword ===dbString){
+                   res.send('logged in');
+               }else{
+                   res.status(402).send('username/password is invalid');
+               }
+           }
+           res.send('User successfully created'+username);
+       }
+   });
+});
 
 
 
