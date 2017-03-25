@@ -30,8 +30,8 @@ app.get('/ui/:fileName', function (req, res) {
 var pool = new Pool(config);
 app.get('/articles/:articleName',function(req,res){
   
-  articleName === article-one;
-  artciles[articleName] == {} 
+ // articleName === article-one;
+//  artciles[articleName] == {} 
   
   pool.query('SELECT * FROM article WHERE title = '+ req.params.articleName,function(err,result){
       if(err){
