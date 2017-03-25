@@ -8,7 +8,7 @@ var config = {
     database:	'the-lost-explorer',
     host: 'db.imad.hasura-app.io',
     port: '5432',
-    password: 'db-the-lost-explorer-26100'
+    password: process.env.DB_PASSWORD
 };
 
 var app = express();
