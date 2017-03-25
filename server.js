@@ -21,18 +21,15 @@ app.get('/', function (req, res) {
 app.get('/sudocode',function(req,res){
     res.sendFile(path.join(__dirname,'ui','sudocode.html'));
 });
-app.get('/ui/style.css', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'style.css'));
-});
-
-app.get('/ui/madi.png', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'madi.png'));
+app.get('/ui/:fileName', function (req, res) {
+  var fileName = req.params.fileName;
+  res.sendFile(path.join(__dirname, 'ui', fileName));
 });
 
 //sql stuff
 var pool = new Pool(config);
 app.get('/test-db',function(req,res){
-   pool.query('SELECT*FROM test',function(req,res){
+   pool.query('SELECT * FROM test', function(req,res){
        if(err){
            res.status(500).send(err.toString());
        }else{
