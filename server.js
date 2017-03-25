@@ -28,15 +28,23 @@ app.get('/ui/:fileName', function (req, res) {
 
 //sql stuff
 var pool = new Pool(config);
-app.get('/test-db',function(req,res){
-   pool.query('SELECT * FROM test', function(err,result){
-       if(err){
-           res.status(500).send(err.toString());
-       }else{
-           res.send(JSON.stringify(result));
-       }
-   });
-    
+app.get('/articles/:articleName',function(req,res){
+  
+  articleName === article-one;
+  artciles[articleName] == {} 
+  
+  pool.query('SELECT * FROM article WHERE title = '+ req.params.articleName,function(err,result){
+      if(err){
+          res.status(500).send(err,toString());
+      }else{
+          if(result.rows.length === 0){
+              res.status(404).send('Article not found');
+          }else{
+              var articleData = result.row[0];
+              res.send(createTemplate(articleData));
+          }
+      }
+  });
 });
 
 counter = 0;
