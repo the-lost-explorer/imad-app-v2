@@ -91,7 +91,7 @@ app.post('/create-user',function(req,res){
 //Login user
 
 app.post('/login',function(req,res){
-     pool.query('SELECT * FROM "user" username = $1',[username],function(err,result){
+     pool.query('SELECT * FROM "user" WHERE username = $1',[username],function(err,result){
        if(err){
            res.status(500).send(err.toString());
        }else{
