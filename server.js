@@ -111,7 +111,7 @@ app.post('/login',function(req,res){
                    res.status(402).send('username/password is invalid');
                }
            }
-           res.send('User successfully created'+username);
+          
        }
    });
 });
